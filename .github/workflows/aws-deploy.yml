@@ -1,0 +1,38 @@
+name: Deploy to Aws[react-ts]
+
+on:
+  push:
+    branches:
+      - react-ts  # Runs only when code is pushed to react-ts
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+
+  build-and-deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    environment:
+      name: dev  # Environment Name in GitHub
+      url: https://cicd-react-netlify-test.netlify.app/  # Your deployed site
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
