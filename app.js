@@ -4,7 +4,11 @@ const port = process.env.PORT || 3000;
 
 // Middleware to handle a basic route
 app.get('/', (req, res) => {
-  res.send('Hello, World!!');
+  res.send('Hello, World!');
+});
+
+app.get('/test', (req, res) => {
+  res.send('Hello, test');
 });
 
 // Listen on the specified port
