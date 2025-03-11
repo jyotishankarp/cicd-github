@@ -1,9 +1,9 @@
-name: Deploy Node.js to EC2
+name: Deploy Node.js to EC2[node-express-js]
 
 on:
   push:
     branches:
-      - main  # Change if deploying from a different branch
+      - node-express-js
 
 jobs:
   deploy:
