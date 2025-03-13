@@ -27,3 +27,19 @@ jobs:
 
       - name: TypeScript Build
         run: npm run build
+
+      - name: Build and package
+        run: |
+          npm ci
+          npm run build  # If you have a build step
+          npm ci --production  # Install only production dependencies
+          zip -r function.zip . -x '*.git*' '*.github*' '*.zip'
+      - name: Deploy to AWS Lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_LAMBDA_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_LAMBDA_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}
+          zip_file: function.zip
+        
